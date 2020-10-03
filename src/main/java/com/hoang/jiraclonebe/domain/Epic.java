@@ -24,7 +24,7 @@ public class Epic {
 
     @NotBlank(message = "Must enter an Epic Identifier")
     @Column(updatable = false, unique = true)
-    @Size(min = 1, max = 5)
+    @Size(message = "Must have at least 1 to 5 characters" ,min = 1, max = 5)
     private String epicIdentifier;
 
     @NotBlank(message = "Must enter a name for Epic")
@@ -32,6 +32,12 @@ public class Epic {
 
     @NotBlank(message = "Must enter a description")
     private String epicDescription;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date startDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date endDate;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date createdOn;
@@ -82,6 +88,22 @@ public class Epic {
 
     public void setEpicDescription(String epicDescription) {
         this.epicDescription = epicDescription;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public Date getCreatedOn() {

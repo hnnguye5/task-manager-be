@@ -1,6 +1,7 @@
 package com.hoang.jiraclonebe.service;
 
 import com.hoang.jiraclonebe.domain.Epic;
+import com.hoang.jiraclonebe.exception.EpicIdException;
 import com.hoang.jiraclonebe.repository.EpicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,15 @@ public class EpicService {
      * @param  epic    the epic object
      * @return         the epic object being saved or updated.
      */
-    public Epic createOrUpdate(Epic epic) {
+    public Epic saveOrUpdate(Epic epic) {
 
-        return epicRepository.save(epic);
+        // checks to see if Epic already exists
+        try{
+           epic.setEpicIdentifier(epic.getEpicIdentifier().toUpperCase());
+           return epicRepository.save(epic);
+       }
+       catch(Exception e) {
+           throw new EpicIdException("Epic ID " + epic.getEpicIdentifier().toUpperCase() + " already exist");
+       }
     }
 }
