@@ -15,4 +15,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EpicRepository extends CrudRepository<Epic, Long> {
 
+    Epic findByEpicIdentifier(String epicIdentifier);
+    Iterable<Epic> findAll();
 }
