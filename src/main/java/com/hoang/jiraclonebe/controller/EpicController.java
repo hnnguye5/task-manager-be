@@ -50,7 +50,7 @@ public class EpicController {
             return errorMap;
         }
 
-        Epic epic1 = epicService.createOrUpdate(epic);
+        Epic epic1 = epicService.saveOrUpdate(epic);
 
         return new ResponseEntity<>(epic1, HttpStatus.CREATED);
     }
