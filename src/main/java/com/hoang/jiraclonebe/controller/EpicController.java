@@ -9,12 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,6 +24,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("api/epic")
+@CrossOrigin
 public class EpicController {
 
     @Autowired
@@ -37,8 +36,8 @@ public class EpicController {
     /**
      * HTTP Request to create or update an object.
      *
-     * @param  epic    the epic object
-     * @return         the epic object mapping being saved or updated.
+     * @param  epic    the Epic object
+     * @return         the Epic object mapping being saved or updated.
      */
     @PostMapping("")
     public ResponseEntity<?> createOrUpdateEpic(@RequestBody @Valid Epic epic, BindingResult result) {
@@ -54,4 +53,47 @@ public class EpicController {
 
         return new ResponseEntity<>(epic1, HttpStatus.CREATED);
     }
+
+    /**
+     * HTTP Request to find all Epic.
+     *
+     * @return         all the existing Epic objects.
+     */
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllEpic() {
+
+        Iterable<Epic> epic = epicService.findAllEpics();
+
+        return new ResponseEntity<Iterable<Epic>>(epic, HttpStatus.OK);
+    }
+
+    /**
+     * HTTP Request to find a specific Epic object by it's identifier.
+     *
+     * @param  epicIdentifier    the Epic identifier
+     * @return                   the specific Epic identifier
+     */
+    @GetMapping("/{epicIdentifier}")
+    public ResponseEntity<Epic> getEpicByIdentifier(@PathVariable String epicIdentifier) {
+
+        Epic epic = epicService.findEpicByIdentifier(epicIdentifier.toUpperCase());
+
+        return new ResponseEntity<Epic>(epic, HttpStatus.OK);
+    }
+
+    /**
+     * HTTP Request to delete a specific Epic object by it's identifier.
+     *
+     * @param  epicIdentifier    the Epic identifier
+     * @return                   the specific Epic identifier
+     */
+
+    @DeleteMapping("/{epicIdentifier}")
+    public ResponseEntity<?> deleteEpicByIdentifier(@PathVariable String epicIdentifier) {
+
+        epicService.deleteEpicByIdentifier(epicIdentifier.toUpperCase());
+
+        return new ResponseEntity<String>("Epic ID " + epicIdentifier.toUpperCase() + " is deleted", HttpStatus.OK);
+    }
 }
+

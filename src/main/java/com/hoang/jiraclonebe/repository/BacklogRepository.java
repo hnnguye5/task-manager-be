@@ -1,6 +1,6 @@
 package com.hoang.jiraclonebe.repository;
 
-import com.hoang.jiraclonebe.domain.Epic;
+import com.hoang.jiraclonebe.domain.Backlog;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,11 +10,8 @@ import org.springframework.stereotype.Repository;
  * any particular data.
  *
  * @author Hoang Nguyen
- * @version 1.0, 3 Oct 2020
+ * @version 1.0, 17 Oct 2020
  */
 @Repository
-public interface EpicRepository extends CrudRepository<Epic, Long> {
-
-    Epic findByEpicIdentifier(String epicIdentifier);
-    Iterable<Epic> findAll();
+public interface BacklogRepository extends CrudRepository<Backlog, Long> {
 }

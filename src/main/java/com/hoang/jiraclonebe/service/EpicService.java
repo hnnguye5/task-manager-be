@@ -21,8 +21,8 @@ public class EpicService {
     /**
      * Creates or Update an Epic and returns as an object.
      *
-     * @param  epic    the epic object
-     * @return         the epic object being saved or updated.
+     * @param  epic    the Epic object
+     * @return         the Epic object being saved or updated.
      */
     public Epic saveOrUpdate(Epic epic) {
 
@@ -34,5 +34,51 @@ public class EpicService {
        catch(Exception e) {
            throw new EpicIdException("Epic ID " + epic.getEpicIdentifier().toUpperCase() + " already exist");
        }
+    }
+
+    /**
+     * Finds all Epic objects that exist.
+     *
+     * @return         list of all Epics.
+     */
+    public Iterable<Epic> findAllEpics() {
+
+        return epicRepository.findAll();
+    }
+
+    /**
+     * Finds an Epic object by its identifier if it exists.
+     *
+     * @param  epicIdentifier    the Epic identifier
+     * @return                   the existing Epic identifier.
+     */
+    public Epic findEpicByIdentifier(String epicIdentifier) {
+
+        Epic epic = epicRepository.findByEpicIdentifier(epicIdentifier.toUpperCase());
+
+        // if Epic does not exist
+        if(epic == null) {
+            throw new EpicIdException("Epic ID " + epicIdentifier.toUpperCase() + " does not exist");
+        }
+
+        return epic;
+    }
+
+    /**
+     * Delete an Epic object by its identifier if it exists.
+     *
+     * @param  epicIdentifier    the Epic identifier
+     * @return                   the existing Epic identifier.
+     */
+    public void deleteEpicByIdentifier(String epicIdentifier) {
+
+        Epic epic = epicRepository.findByEpicIdentifier(epicIdentifier.toUpperCase());
+
+        // if Epic does not exist
+        if(epic == null) {
+            throw new EpicIdException("Epic ID " + epicIdentifier.toUpperCase() + " does not exist");
+        }
+
+        epicRepository.delete(epic);
     }
 }
