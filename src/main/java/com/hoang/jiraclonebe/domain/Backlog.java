@@ -3,6 +3,8 @@ package com.hoang.jiraclonebe.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Backlog {
@@ -19,6 +21,9 @@ public class Backlog {
     @JoinColumn(name="epic_id", nullable = false)
     @JsonIgnore
     private Epic epic;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "backlog")
+    private List<EpicTask> epicTaskList = new ArrayList<>();
 
     public Backlog() {
     }
@@ -53,5 +58,13 @@ public class Backlog {
 
     public void setEpic(Epic epic) {
         this.epic = epic;
+    }
+
+    public List<EpicTask> getEpicTaskList() {
+        return epicTaskList;
+    }
+
+    public void setEpicTaskList(List<EpicTask> epicTaskList) {
+        this.epicTaskList = epicTaskList;
     }
 }
