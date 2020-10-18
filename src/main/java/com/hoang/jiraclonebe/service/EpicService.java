@@ -1,7 +1,9 @@
 package com.hoang.jiraclonebe.service;
 
+import com.hoang.jiraclonebe.domain.Backlog;
 import com.hoang.jiraclonebe.domain.Epic;
 import com.hoang.jiraclonebe.exception.EpicIdException;
+import com.hoang.jiraclonebe.repository.BacklogRepository;
 import com.hoang.jiraclonebe.repository.EpicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,9 @@ public class EpicService {
     @Autowired
     private EpicRepository epicRepository;
 
+    @Autowired
+    private BacklogRepository backlogRepository;
+
     /**
      * Creates or Update an Epic and returns as an object.
      *
@@ -29,6 +34,19 @@ public class EpicService {
         // checks to see if Epic already exists
         try{
            epic.setEpicIdentifier(epic.getEpicIdentifier().toUpperCase());
+
+           // create new backlog if its a new Epic being created
+           if(epic.getId() == null) {
+               Backlog backlog = new Backlog();
+               epic.setBacklog(backlog);
+               backlog.setEpic(epic);
+               backlog.setEpicIdentifier(epic.getEpicIdentifier().toUpperCase());
+           }
+
+           // when update, make sure backlog is still there
+           if(epic.getId() != null) {
+                epic.setBacklog(backlogRepository.findByEpicIdentifier(epic.getEpicIdentifier().toUpperCase()));
+           }
            return epicRepository.save(epic);
        }
        catch(Exception e) {

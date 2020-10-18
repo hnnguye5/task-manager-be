@@ -55,6 +55,9 @@ public class Epic {
         this.updatedOn = new Date();
     }
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "epic")
+    private Backlog backlog;
+
     public Epic() {
     }
 
@@ -120,5 +123,13 @@ public class Epic {
 
     public void setUpdatedOn(Date updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public Backlog getBacklog() {
+        return backlog;
+    }
+
+    public void setBacklog(Backlog backlog) {
+        this.backlog = backlog;
     }
 }
