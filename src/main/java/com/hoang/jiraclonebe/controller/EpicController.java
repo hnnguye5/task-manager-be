@@ -24,6 +24,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("api/epic")
+@CrossOrigin
 public class EpicController {
 
     @Autowired
