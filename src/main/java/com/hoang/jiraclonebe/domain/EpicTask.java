@@ -24,7 +24,7 @@ public class EpicTask {
     @NotBlank(message = "Please enter a acceptance criteria for task")
     private String acceptanceCriteria;
     private String status;
-    private String priority;
+    private Integer priority;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date dueDate;
 
@@ -98,11 +98,11 @@ public class EpicTask {
         this.status = status;
     }
 
-    public String getPriority() {
+    public Integer getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(Integer priority) {
         this.priority = priority;
     }
 
