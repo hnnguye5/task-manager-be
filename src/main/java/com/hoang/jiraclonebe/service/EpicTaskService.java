@@ -19,7 +19,7 @@ public class EpicTaskService {
     public EpicTask addEpicTask(String epicIdentifier, EpicTask epicTask) {
 
         // connect Backlog with Epic Task
-        Backlog backlog = backlogRepository.findByEpicIdentifier((epicIdentifier));
+        Backlog backlog = backlogRepository.findByEpicIdentifier((epicIdentifier.toUpperCase()));
         epicTask.setBacklog(backlog);
 
         // allows Epic Task to have its own IDs for each task
@@ -39,5 +39,9 @@ public class EpicTaskService {
         }
 
         return epicTaskRepository.save(epicTask);
+    }
+
+    public Iterable<EpicTask> findBacklogByIdentifier(String epicIdentifier) {
+        return epicTaskRepository.findByEpicIdentifierOrderByPriority(epicIdentifier);
     }
 }

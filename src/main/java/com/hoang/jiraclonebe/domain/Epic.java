@@ -1,6 +1,7 @@
 package com.hoang.jiraclonebe.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -56,6 +57,7 @@ public class Epic {
     }
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "epic")
+    @JsonIgnore
     private Backlog backlog;
 
     public Epic() {

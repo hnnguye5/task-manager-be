@@ -1,6 +1,8 @@
 package com.hoang.jiraclonebe.controller;
 
+import com.hoang.jiraclonebe.domain.Epic;
 import com.hoang.jiraclonebe.domain.EpicTask;
+import com.hoang.jiraclonebe.repository.BacklogRepository;
 import com.hoang.jiraclonebe.service.EpicTaskService;
 import com.hoang.jiraclonebe.service.MapErrorValidation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ public class BacklogController {
     @Autowired
     private EpicTaskService epicTaskService;
 
+
     @Autowired
     private MapErrorValidation mapErrorValidation;
 
@@ -36,5 +39,11 @@ public class BacklogController {
 
         return new ResponseEntity<EpicTask>(epicTask1, HttpStatus.CREATED);
 
+    }
+
+    @GetMapping("{backlog_id}")
+    public Iterable<EpicTask> getEpicBacklog(@PathVariable String backlog_id) {
+
+       return epicTaskService.findBacklogByIdentifier(backlog_id.toUpperCase());
     }
 }
