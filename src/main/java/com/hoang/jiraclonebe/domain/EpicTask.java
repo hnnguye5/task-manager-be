@@ -17,7 +17,7 @@ public class EpicTask {
     @Column(updatable = false)
     private String epicIdentifier;
 
-    @Column(updatable = false)
+    @Column(updatable = false, unique = true)
     private String epicSequence;
     @NotBlank(message = "Please write a summary for task")
     private String summary;
