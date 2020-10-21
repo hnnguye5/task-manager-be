@@ -46,4 +46,12 @@ public class BacklogController {
 
        return epicTaskService.findBacklogByIdentifier(backlog_id.toUpperCase());
     }
+
+    @GetMapping("/{backlog_id}/{epicTask_id}")
+    public ResponseEntity<?> getEpicTask(@PathVariable String backlog_id, @PathVariable String epicTask_id) {
+
+        EpicTask epicTask = epicTaskService.findEpicTaskBySequence(backlog_id,epicTask_id);
+
+        return new ResponseEntity<EpicTask>(epicTask, HttpStatus.OK);
+    }
 }

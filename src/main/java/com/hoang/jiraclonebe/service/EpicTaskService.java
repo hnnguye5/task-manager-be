@@ -63,4 +63,9 @@ public class EpicTaskService {
 
         return epicTaskRepository.findByEpicIdentifierOrderByPriority(epicIdentifier);
     }
+
+    public EpicTask findEpicTaskBySequence(String backlog_id, String epicTask_id) {
+
+        return epicTaskRepository.findByEpicSequence(epicTask_id);
+    }
 }

@@ -18,4 +18,6 @@ import java.util.List;
 public interface EpicTaskRepository extends CrudRepository<EpicTask, Long> {
 
     List<EpicTask> findByEpicIdentifierOrderByPriority(String epicIdentifier);
+
+    EpicTask findByEpicSequence(String epicSequence);
 }
