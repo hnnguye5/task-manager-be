@@ -1,6 +1,7 @@
 package com.hoang.jiraclonebe.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -23,7 +24,7 @@ public class EpicTask {
     @NotBlank(message = "Please enter a acceptance criteria for task")
     private String acceptanceCriteria;
     private String status;
-    private String priority;
+    private Integer priority;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date dueDate;
 
@@ -39,6 +40,12 @@ public class EpicTask {
     protected void updatedOn() {
         this.updatedOn = new Date();
     }
+
+    // Cascade refresh the backlog if epic task is deleted
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "backlog_id", updatable = false, nullable = false)
+    @JsonIgnore
+    private Backlog backlog;
 
     public EpicTask() {
     }
@@ -91,11 +98,11 @@ public class EpicTask {
         this.status = status;
     }
 
-    public String getPriority() {
+    public Integer getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(Integer priority) {
         this.priority = priority;
     }
 
@@ -121,6 +128,14 @@ public class EpicTask {
 
     public void setUpdatedOn(Date updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public Backlog getBacklog() {
+        return backlog;
+    }
+
+    public void setBacklog(Backlog backlog) {
+        this.backlog = backlog;
     }
 
     @Override
