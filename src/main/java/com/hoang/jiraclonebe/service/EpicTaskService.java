@@ -66,6 +66,16 @@ public class EpicTaskService {
 
     public EpicTask findEpicTaskBySequence(String backlog_id, String epicTask_id) {
 
-        return epicTaskRepository.findByEpicSequence(epicTask_id);
+        EpicTask epicTask = epicTaskRepository.findByEpicSequence(epicTask_id.toUpperCase());
+
+        if(epicTask == null) {
+            throw new EpicNotFoundException("Epic Task: " + epicTask_id.toUpperCase() + " is not found");
+        }
+
+        if(!epicTask.getEpicIdentifier().equals(backlog_id.toUpperCase())){
+            throw new EpicNotFoundException("EpicTask ID: " + epicTask_id.toUpperCase() + " does not exist in " + backlog_id);
+        }
+
+        return epicTask;
     }
 }
