@@ -22,7 +22,7 @@ public class Backlog {
     @JsonIgnore
     private Epic epic;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "backlog")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, mappedBy = "backlog", orphanRemoval = true)
     private List<EpicTask> epicTaskList = new ArrayList<>();
 
     public Backlog() {

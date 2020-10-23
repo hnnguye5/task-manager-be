@@ -54,4 +54,26 @@ public class BacklogController {
 
         return new ResponseEntity<EpicTask>(epicTask, HttpStatus.OK);
     }
+
+    @PutMapping("/{backlog_id}/{epicTask_id}")
+    public ResponseEntity<?> updatedEpicTask(@Valid @RequestBody EpicTask epicTask, BindingResult result, @PathVariable String backlog_id, @PathVariable String epicTask_id) {
+
+        ResponseEntity<?> errorMap = mapErrorValidation.errorMapValidation(result);
+        if(errorMap != null) {
+            return errorMap;
+        }
+
+        EpicTask updateEpicTask = epicTaskService.updateEpicTask(epicTask,backlog_id.toUpperCase(),epicTask_id.toUpperCase());
+
+        return new ResponseEntity<EpicTask>(updateEpicTask, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{backlog_id}/{epicTask_id}")
+    public ResponseEntity<?> deleteEpicTask(@PathVariable String backlog_id, @PathVariable String epicTask_id) {
+
+        epicTaskService.deleteEpicTask(backlog_id,epicTask_id);
+
+        return new ResponseEntity<String>("EpicTask " + epicTask_id.toUpperCase() + " was deleted", HttpStatus.OK);
+    }
+
 }

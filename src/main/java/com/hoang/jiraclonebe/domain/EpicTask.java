@@ -42,7 +42,7 @@ public class EpicTask {
     }
 
     // Cascade refresh the backlog if epic task is deleted
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "backlog_id", updatable = false, nullable = false)
     @JsonIgnore
     private Backlog backlog;
