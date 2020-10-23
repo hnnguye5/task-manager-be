@@ -78,4 +78,21 @@ public class EpicTaskService {
 
         return epicTask;
     }
+
+    public EpicTask updateEpicTask(EpicTask updateEpicTask, String backlog_id, String epicTask_id) {
+
+        EpicTask epicTask = findEpicTaskBySequence(backlog_id.toUpperCase(), epicTask_id.toUpperCase());
+
+        epicTask = updateEpicTask;
+
+        return epicTaskRepository.save(epicTask);
+
+    }
+
+    public void deleteEpicTask(String backlog_id, String epicTask_id) {
+
+        EpicTask epicTask =  findEpicTaskBySequence(backlog_id,epicTask_id);
+
+       epicTaskRepository.delete(epicTask);
+    }
 }
