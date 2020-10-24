@@ -20,8 +20,8 @@ public class EpicIdResponseEntity extends ResponseEntityExceptionHandler {
     /**
      * Handles the response for duplicate Epic IDs.
      *
-     * @param  exception    custom message
-     * @return              message that the object has duplicate Epic IDs
+     * @param  exception    custom message.
+     * @return              message that the object has duplicate Epic IDs.
      */
     @ExceptionHandler
     public final ResponseEntity<Object> epicIdExceptionHandler(EpicIdException exception) {

@@ -12,11 +12,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Map;
 
 /**
- * This class is used for web request handler. It handles
+ * This class is used for web request handler. It handles Epic
  * HTTP Request CRUD operations.
  *
  * @author Hoang Nguyen
@@ -34,17 +33,17 @@ public class EpicController {
     private MapErrorValidation mapErrorValidation;
 
     /**
-     * HTTP Request to create or update an object.
+     * HTTP Request to create or update an Epic.
      *
-     * @param  epic    the Epic object
-     * @return         the Epic object mapping being saved or updated.
+     * @param  epic      the Epic object.
+     * @param  result    the Epic errors creating the object.
+     * @return           the Epic object mapping being saved or updated.
      */
     @PostMapping("")
     public ResponseEntity<?> createOrUpdateEpic(@RequestBody @Valid Epic epic, BindingResult result) {
 
         ResponseEntity<Map<String,String>> errorMap = mapErrorValidation.errorMapValidation(result);
-
-        // if there are errors
+        // if there are errors creating an Epic
         if(errorMap != null) {
             return errorMap;
         }
@@ -70,8 +69,8 @@ public class EpicController {
     /**
      * HTTP Request to find a specific Epic object by it's identifier.
      *
-     * @param  epicIdentifier    the Epic identifier
-     * @return                   the specific Epic identifier
+     * @param  epicIdentifier    the Epic Identifier.
+     * @return                   the specific Epic Identifier.
      */
     @GetMapping("/{epicIdentifier}")
     public ResponseEntity<Epic> getEpicByIdentifier(@PathVariable String epicIdentifier) {
@@ -82,12 +81,11 @@ public class EpicController {
     }
 
     /**
-     * HTTP Request to delete a specific Epic object by it's identifier.
+     * HTTP Request to delete a specific Epic object by it's Identifier.
      *
-     * @param  epicIdentifier    the Epic identifier
-     * @return                   the specific Epic identifier
+     * @param  epicIdentifier    the Epic Identifier.
+     * @return                   the specific Epic Identifier.
      */
-
     @DeleteMapping("/{epicIdentifier}")
     public ResponseEntity<?> deleteEpicByIdentifier(@PathVariable String epicIdentifier) {
 

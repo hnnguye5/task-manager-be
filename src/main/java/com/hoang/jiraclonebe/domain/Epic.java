@@ -56,6 +56,7 @@ public class Epic {
         this.updatedOn = new Date();
     }
 
+    // if backlog is deleted, all of its children(EpicTask) will be deleted
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "epic")
     @JsonIgnore
     private Backlog backlog;

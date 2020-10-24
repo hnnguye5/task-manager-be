@@ -6,7 +6,6 @@ package com.hoang.jiraclonebe.exception;
  * @author Hoang Nguyen
  * @version 1.0, 3 Oct 2020
  */
-
 public class EpicIdExceptionResponse {
 
     private String epicIdentifier;

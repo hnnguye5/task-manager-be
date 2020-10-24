@@ -1,8 +1,6 @@
 package com.hoang.jiraclonebe.controller;
 
-import com.hoang.jiraclonebe.domain.Epic;
 import com.hoang.jiraclonebe.domain.EpicTask;
-import com.hoang.jiraclonebe.repository.BacklogRepository;
 import com.hoang.jiraclonebe.service.EpicTaskService;
 import com.hoang.jiraclonebe.service.MapErrorValidation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,14 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/backlog")
 @CrossOrigin
+
+/**
+ * This class is used for web request handler. It handles Epic Task
+ * HTTP Request CRUD operations.
+ *
+ * @author Hoang Nguyen
+ * @version 1.0, 24 Oct 2020
+ */
 public class BacklogController {
 
     @Autowired
@@ -25,28 +31,48 @@ public class BacklogController {
     @Autowired
     private MapErrorValidation mapErrorValidation;
 
+    /**
+     * HTTP Request to create an EpicTask.
+     *
+     * @param  epicTask    the EpicTask object.
+     * @param  result      the EpicTask errors creating the object.
+     * @param  backlog_id  the Backlog Identifier .
+     * @return             the EpicTask object mapping being saved.
+     */
     @PostMapping("/{backlog_id}")
     public ResponseEntity<?> addEpicTaskToBacklog(@Valid @RequestBody EpicTask epicTask, BindingResult result,
                                                   @PathVariable String backlog_id) {
 
         ResponseEntity<?> errorMap = mapErrorValidation.errorMapValidation(result);
+        // if there are errors creating an EpicTask
         if(errorMap != null) {
             return errorMap;
         }
 
-
         EpicTask epicTask1 = epicTaskService.addEpicTask(backlog_id, epicTask);
 
         return new ResponseEntity<EpicTask>(epicTask1, HttpStatus.CREATED);
-
     }
 
+    /**
+     * HTTP Request to find all EpicTask.
+     *
+     * @param   backlog_id    the Backlog Identifier.
+     * @return                all the existing EpicTask objects.
+     */
     @GetMapping("{backlog_id}")
     public Iterable<EpicTask> getEpicBacklog(@PathVariable String backlog_id) {
 
        return epicTaskService.findBacklogByIdentifier(backlog_id.toUpperCase());
     }
 
+    /**
+     * HTTP Request to find a specific EpicTask object by it's identifier.
+     *
+     * @param  backlog_id     the Backlog Identifier.
+     * @param  epicTask_id    the EpicTask Identifier.
+     * @return                the specific EpicTask Identifier.
+     */
     @GetMapping("/{backlog_id}/{epicTask_id}")
     public ResponseEntity<?> getEpicTask(@PathVariable String backlog_id, @PathVariable String epicTask_id) {
 
@@ -55,10 +81,21 @@ public class BacklogController {
         return new ResponseEntity<EpicTask>(epicTask, HttpStatus.OK);
     }
 
+    /**
+     * HTTP Request to find a specific EpicTask object and updates the object.
+     *
+     * @param  epicTask       the EpicTask.
+     * @param  result         the EpicTask errors when updating the object.
+     * @param  backlog_id     the Backlog Identifier.
+     * @param  epicTask_id    the EpicTask Identifier.
+     * @return                the EpicTask object that is updated.
+     */
     @PutMapping("/{backlog_id}/{epicTask_id}")
-    public ResponseEntity<?> updatedEpicTask(@Valid @RequestBody EpicTask epicTask, BindingResult result, @PathVariable String backlog_id, @PathVariable String epicTask_id) {
+    public ResponseEntity<?> updatedEpicTask(@Valid @RequestBody EpicTask epicTask, BindingResult result, @PathVariable
+            String backlog_id, @PathVariable String epicTask_id) {
 
         ResponseEntity<?> errorMap = mapErrorValidation.errorMapValidation(result);
+        // if there are errors updating an EpicTask
         if(errorMap != null) {
             return errorMap;
         }
@@ -68,6 +105,13 @@ public class BacklogController {
         return new ResponseEntity<EpicTask>(updateEpicTask, HttpStatus.OK);
     }
 
+    /**
+     * HTTP Request to delete a specific EpicTask object by it's identifier.
+     *
+     * @param  backlog_id     the Backlog Identifier.
+     * @param  epicTask_id    the Epic Identifier.
+     * @return                the message verifying the deletion of the EpicTask object.
+     */
     @DeleteMapping("/{backlog_id}/{epicTask_id}")
     public ResponseEntity<?> deleteEpicTask(@PathVariable String backlog_id, @PathVariable String epicTask_id) {
 

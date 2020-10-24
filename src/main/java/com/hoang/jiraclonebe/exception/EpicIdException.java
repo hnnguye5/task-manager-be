@@ -15,8 +15,8 @@ public class EpicIdException extends RuntimeException{
     /**
      * Creates custom message for duplicate Epic IDs.
      *
-     * @param  message  custom message
-     * @return          custom message
+     * @param  message  custom message.
+     * @return          custom message.
      */
     public EpicIdException(String message) {
         super(message);
