@@ -6,6 +6,14 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is where the attributes are declared in an object
+ * for class Backlog. It is used to map the attributes to a database
+ * table.
+ *
+ * @author Hoang Nguyen
+ * @version 1.0, 20 Oct 2020
+ */
 @Entity
 public class Backlog {
 
@@ -22,6 +30,7 @@ public class Backlog {
     @JsonIgnore
     private Epic epic;
 
+    // when EpicTask is deleted, refresh database to get updated list
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, mappedBy = "backlog", orphanRemoval = true)
     private List<EpicTask> epicTaskList = new ArrayList<>();
 

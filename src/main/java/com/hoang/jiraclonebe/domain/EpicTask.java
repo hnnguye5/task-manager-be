@@ -7,6 +7,14 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
+/**
+ * This class is where the attributes are declared in an object
+ * for class EpicTask. It is used to map the attributes to a database
+ * table.
+ *
+ * @author Hoang Nguyen
+ * @version 1.0, 20 Oct 2020
+ */
 @Entity
 public class EpicTask {
 
@@ -41,7 +49,6 @@ public class EpicTask {
         this.updatedOn = new Date();
     }
 
-    // Cascade refresh the backlog if epic task is deleted
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "backlog_id", updatable = false, nullable = false)
     @JsonIgnore
@@ -138,19 +145,4 @@ public class EpicTask {
         this.backlog = backlog;
     }
 
-    @Override
-    public String toString() {
-        return "EpicTask{" +
-                "id=" + id +
-                ", epicIdentifier='" + epicIdentifier + '\'' +
-                ", epicSequence='" + epicSequence + '\'' +
-                ", summary='" + summary + '\'' +
-                ", acceptanceCriteria='" + acceptanceCriteria + '\'' +
-                ", status='" + status + '\'' +
-                ", priority='" + priority + '\'' +
-                ", dueDate=" + dueDate +
-                ", createOn=" + createOn +
-                ", updatedOn=" + updatedOn +
-                '}';
-    }
 }

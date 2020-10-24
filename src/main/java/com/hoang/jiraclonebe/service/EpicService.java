@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * The class handles the business logic for each method.
+ * The class handles the business logic for the Epic object with each CRUD method.
  *
  * @author Hoang Nguyen
  * @version 1.0, 3 Oct 2020
@@ -26,7 +26,7 @@ public class EpicService {
     /**
      * Creates or Update an Epic and returns as an object.
      *
-     * @param  epic    the Epic object
+     * @param  epic    the Epic object.
      * @return         the Epic object being saved or updated.
      */
     public Epic saveOrUpdate(Epic epic) {
@@ -43,7 +43,7 @@ public class EpicService {
                backlog.setEpicIdentifier(epic.getEpicIdentifier().toUpperCase());
            }
 
-           // when update, make sure backlog is still there
+           // when update, make sure backlog still has relations to epic
            if(epic.getId() != null) {
                 epic.setBacklog(backlogRepository.findByEpicIdentifier(epic.getEpicIdentifier().toUpperCase()));
            }
@@ -65,16 +65,15 @@ public class EpicService {
     }
 
     /**
-     * Finds an Epic object by its identifier if it exists.
+     * Finds an Epic object by its identifier.
      *
      * @param  epicIdentifier    the Epic identifier
-     * @return                   the existing Epic identifier.
+     * @return                   the Epic object.
      */
     public Epic findEpicByIdentifier(String epicIdentifier) {
 
         Epic epic = epicRepository.findByEpicIdentifier(epicIdentifier.toUpperCase());
 
-        // if Epic does not exist
         if(epic == null) {
             throw new EpicIdException("Epic ID " + epicIdentifier.toUpperCase() + " does not exist");
         }
@@ -92,7 +91,6 @@ public class EpicService {
 
         Epic epic = epicRepository.findByEpicIdentifier(epicIdentifier.toUpperCase());
 
-        // if Epic does not exist
         if(epic == null) {
             throw new EpicIdException("Epic ID " + epicIdentifier.toUpperCase() + " does not exist");
         }
