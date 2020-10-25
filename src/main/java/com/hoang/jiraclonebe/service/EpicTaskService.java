@@ -50,7 +50,7 @@ public class EpicTaskService {
             epicTask.setEpicIdentifier(epicIdentifier);
 
 
-            if(epicTask.getPriority() == null) {
+            if(epicTask.getPriority() == 0 || epicTask.getPriority() == null) {
                 epicTask.setPriority(3);
             }
 
