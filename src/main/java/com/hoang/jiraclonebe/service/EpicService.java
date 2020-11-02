@@ -3,6 +3,7 @@ package com.hoang.jiraclonebe.service;
 import com.hoang.jiraclonebe.domain.Backlog;
 import com.hoang.jiraclonebe.domain.Epic;
 import com.hoang.jiraclonebe.exception.EpicIdException;
+import com.hoang.jiraclonebe.exception.EpicNotFoundException;
 import com.hoang.jiraclonebe.repository.BacklogRepository;
 import com.hoang.jiraclonebe.repository.EpicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,9 +60,10 @@ public class EpicService {
      *
      * @return         list of all Epics.
      */
-    public Iterable<Epic> findAllEpics() {
+    public Iterable<Epic> findAll() {
 
         return epicRepository.findAll();
+
     }
 
     /**

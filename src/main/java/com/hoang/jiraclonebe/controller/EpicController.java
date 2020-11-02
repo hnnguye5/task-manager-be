@@ -61,7 +61,7 @@ public class EpicController {
     @GetMapping("/all")
     public ResponseEntity<?> getAllEpic() {
 
-        Iterable<Epic> epic = epicService.findAllEpics();
+        Iterable<Epic> epic = epicService.findAll();
 
         return new ResponseEntity<Iterable<Epic>>(epic, HttpStatus.OK);
     }
