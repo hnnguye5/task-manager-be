@@ -42,6 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js"
                 ).permitAll()
+                .antMatchers("/api/users/**").permitAll() // testing creating user without enter password
                 .anyRequest().authenticated(); // any other request, we need authentication
 
     }
