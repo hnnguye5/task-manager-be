@@ -3,6 +3,7 @@ package com.hoang.jiraclonebe.controller;
 import com.hoang.jiraclonebe.domain.User;
 import com.hoang.jiraclonebe.service.MapErrorValidation;
 import com.hoang.jiraclonebe.service.UserService;
+import com.hoang.jiraclonebe.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +25,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserValidator userValidator;
+
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result){
         // Validate passwords match
+        userValidator.validate(user, result);
 
         ResponseEntity<?> errorMap = mapErrorValidation.errorMapValidation(result);
         if(errorMap != null)return errorMap;
