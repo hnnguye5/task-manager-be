@@ -1,5 +1,11 @@
 package com.hoang.jiraclonebe.exception;
 
+/**
+ * The class handles the HTTP Request when Username or Password is invalid.
+ *
+ * @author Hoang Nguyen
+ * @version 1.0, 7 Nov 2020
+ */
 public class InvalidLoginResponse {
 
     private String username;

@@ -1,5 +1,12 @@
 package com.hoang.jiraclonebe.payload;
 
+/**
+ * The class handles the response when User can login with
+ * JWT.
+ *
+ * @author Hoang Nguyen
+ * @version 1.0, 7 Nov 2020
+ */
 public class JWTLoginSuccessResponse {
 
     private boolean success;

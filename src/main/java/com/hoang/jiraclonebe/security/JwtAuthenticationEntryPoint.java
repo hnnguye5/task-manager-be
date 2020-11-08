@@ -11,6 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The class handles the entry point when logging in with user.
+ * JWT.
+ *
+ * @author Hoang Nguyen
+ * @version 1.0, 7 Nov 2020
+ */
 // calls this method when user does not have access
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {

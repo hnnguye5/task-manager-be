@@ -19,6 +19,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import static com.hoang.jiraclonebe.security.SecurityConstants.H2_URL;
 import static com.hoang.jiraclonebe.security.SecurityConstants.SIGN_UP_URL;
 
+/**
+ * The class handles the security configuration of the application.
+ *
+ * @author Hoang Nguyen
+ * @version 1.0, 7 Nov 2020
+ */
 @Configurable
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -26,7 +32,6 @@ import static com.hoang.jiraclonebe.security.SecurityConstants.SIGN_UP_URL;
         jsr250Enabled = true,
         prePostEnabled = true
 )
-// default security configurations
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -38,23 +43,40 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    /**
+     * Builds the authentication and make sure User is valid.
+     *
+     * @param  authenticationManagerBuilder       builds up the authentication.
+     * @return                                    all of the authentication.
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(customUserDetailService).passwordEncoder(bCryptPasswordEncoder);
     }
 
+    /**
+     * Manages the authentication.
+     *
+     * @return      authentication manager.
+     */
     @Override
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
 
+    /**
+     * Handles the default security settings.
+     *
+     * @param  http       the application routes.
+     * @return            allows authorization within configurations.
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable() //disable since we using JWT
                 .exceptionHandling().authenticationEntryPoint(unauthHandler)
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //server doesnt hold sessions(no state, uses JTW)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //server does not hold sessions(no state, uses JTW)
                 .and()
                 .headers().frameOptions().sameOrigin() // allows uses H2 Database
                 .and()

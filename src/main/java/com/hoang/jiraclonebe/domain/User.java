@@ -10,6 +10,14 @@ import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Date;
 
+/**
+ * This class is where the attributes are declared in an object
+ * for class User. It is used to map the attributes to a database
+ * table.
+ *
+ * @author Hoang Nguyen
+ * @version 1.0, 7 Nov 2020
+ */
 @Entity
 public class User implements UserDetails {
 

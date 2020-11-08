@@ -1,6 +1,12 @@
 package com.hoang.jiraclonebe.payload;
 
-
+/**
+ * The class handles the request when logging in with a user.
+ * JWT.
+ *
+ * @author Hoang Nguyen
+ * @version 1.0, 7 Nov 2020
+ */
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {

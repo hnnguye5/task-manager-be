@@ -1,5 +1,11 @@
 package com.hoang.jiraclonebe.exception;
 
+/**
+ * The class handles UsernameExist Identifier object.
+ *
+ * @author Hoang Nguyen
+ * @version 1.0, 7 Nov 2020
+ */
 public class UsernameExistResponse {
 
     private String username;
