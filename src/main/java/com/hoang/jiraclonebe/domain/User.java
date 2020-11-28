@@ -7,9 +7,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
+/**
+ * This class is where the attributes are declared in an object
+ * for class User. It is used to map the attributes to a database
+ * table.
+ *
+ * @author Hoang Nguyen
+ * @version 1.0, 7 Nov 2020
+ */
 @Entity
 public class User implements UserDetails {
 
@@ -44,6 +54,10 @@ public class User implements UserDetails {
     protected void updatedOn() {
         this.updatedOn = new Date();
     }
+
+    // if delete user, delete all epic information
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
+    private List<Epic> epics = new ArrayList<Epic>();
 
     public User() {
     }
@@ -103,6 +117,15 @@ public class User implements UserDetails {
     public void setUpdatedOn(Date updatedOn) {
         this.updatedOn = updatedOn;
     }
+
+    public List<Epic> getEpics() {
+        return epics;
+    }
+
+    public void setProjects(List<Epic> epics) {
+        this.epics = epics;
+    }
+
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

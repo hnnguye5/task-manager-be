@@ -1,20 +1,20 @@
-package com.hoang.jiraclonebe.exception;
+package com.hoang.jiraclonebe.payload;
 
 /**
- * The class handles the HTTP Request when Username or Password is invalid.
+ * The class handles the request when logging in with a user.
+ * JWT.
  *
  * @author Hoang Nguyen
  * @version 1.0, 7 Nov 2020
  */
-public class InvalidLoginResponse {
+import javax.validation.constraints.NotBlank;
 
+public class LoginRequest {
+
+    @NotBlank(message = "Must have a username")
     private String username;
+    @NotBlank(message = "Must have a password")
     private String password;
-
-    public InvalidLoginResponse() {
-        this.username = "Invalid Username";
-        this.password = "Invalid Password";
-    }
 
     public String getUsername() {
         return username;

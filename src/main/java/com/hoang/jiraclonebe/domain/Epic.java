@@ -61,6 +61,13 @@ public class Epic {
     @JsonIgnore
     private Backlog backlog;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User user;
+
+    // user who created the epic
+    private String epicCreator;
+
     public Epic() {
     }
 
@@ -134,5 +141,21 @@ public class Epic {
 
     public void setBacklog(Backlog backlog) {
         this.backlog = backlog;
+    }
+
+    public String getEpicCreator() {
+        return epicCreator;
+    }
+
+    public void setEpicCreator(String epicCreator) {
+        this.epicCreator = epicCreator;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
