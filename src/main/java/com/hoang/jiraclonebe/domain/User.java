@@ -7,8 +7,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * This class is where the attributes are declared in an object
@@ -52,6 +54,10 @@ public class User implements UserDetails {
     protected void updatedOn() {
         this.updatedOn = new Date();
     }
+
+    // if delete user, delete all epic information
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
+    private List<Epic> epics = new ArrayList<Epic>();
 
     public User() {
     }
@@ -112,6 +118,13 @@ public class User implements UserDetails {
         this.updatedOn = updatedOn;
     }
 
+    public List<Epic> getEpics() {
+        return epics;
+    }
+
+    public void setProjects(List<Epic> epics) {
+        this.epics = epics;
+    }
 
     @JsonIgnore
     @Override
