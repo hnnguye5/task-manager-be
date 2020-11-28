@@ -36,9 +36,10 @@ public class EpicController {
     /**
      * HTTP Request to create or update an Epic.
      *
-     * @param  epic      the Epic object.
-     * @param  result    the Epic errors creating the object.
-     * @return           the Epic object mapping being saved or updated.
+     * @param  epic         the Epic object.
+     * @param  result       the Epic errors creating the object.
+     * @param  principal    the username that logs in.
+     * @return              the Epic object mapping being saved or updated.
      */
     @PostMapping("")
     public ResponseEntity<?> createOrUpdateEpic(@RequestBody @Valid Epic epic, BindingResult result, Principal principal) {
@@ -49,6 +50,7 @@ public class EpicController {
             return errorMap;
         }
 
+        // principal sets relationship to user and epic
         Epic epic1 = epicService.saveOrUpdate(epic, principal.getName());
 
         return new ResponseEntity<>(epic1, HttpStatus.CREATED);
