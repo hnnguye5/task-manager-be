@@ -74,12 +74,13 @@ public class EpicController {
      * HTTP Request to find a specific Epic object by it's identifier.
      *
      * @param  epicIdentifier    the Epic Identifier.
+     * @param  principal         username that logs in.
      * @return                   the specific Epic Identifier.
      */
     @GetMapping("/{epicIdentifier}")
-    public ResponseEntity<Epic> getEpicByIdentifier(@PathVariable String epicIdentifier) {
+    public ResponseEntity<Epic> getEpicByIdentifier(@PathVariable String epicIdentifier, Principal principal) {
 
-        Epic epic = epicService.findEpicByIdentifier(epicIdentifier.toUpperCase());
+        Epic epic = epicService.findEpicByIdentifier(epicIdentifier.toUpperCase(), principal.getName());
 
         return new ResponseEntity<Epic>(epic, HttpStatus.OK);
     }
@@ -91,9 +92,9 @@ public class EpicController {
      * @return                   the specific Epic Identifier.
      */
     @DeleteMapping("/{epicIdentifier}")
-    public ResponseEntity<?> deleteEpicByIdentifier(@PathVariable String epicIdentifier) {
+    public ResponseEntity<?> deleteEpicByIdentifier(@PathVariable String epicIdentifier, Principal principal) {
 
-        epicService.deleteEpicByIdentifier(epicIdentifier.toUpperCase());
+        epicService.deleteEpicByIdentifier(epicIdentifier.toUpperCase(), principal.getName());
 
         return new ResponseEntity<String>("Epic ID " + epicIdentifier.toUpperCase() + " is deleted", HttpStatus.OK);
     }

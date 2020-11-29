@@ -82,14 +82,21 @@ public class EpicService {
      * Finds an Epic object by its identifier.
      *
      * @param  epicIdentifier    the Epic identifier
+     * @param  username          the username that logins.
      * @return                   the Epic object.
      */
-    public Epic findEpicByIdentifier(String epicIdentifier) {
+    public Epic findEpicByIdentifier(String epicIdentifier, String username) {
 
         Epic epic = epicRepository.findByEpicIdentifier(epicIdentifier.toUpperCase());
 
+        // if epic does not exist
         if(epic == null) {
             throw new EpicIdException("Epic ID " + epicIdentifier.toUpperCase() + " does not exist");
+        }
+
+        // if epic creator does not match with current login user
+        if(!epic.getEpicCreator().equals(username)) {
+            throw new EpicNotFoundException("Epic does not exist in your account");
         }
 
         return epic;
@@ -99,16 +106,11 @@ public class EpicService {
      * Delete an Epic object by its identifier if it exists.
      *
      * @param  epicIdentifier    the Epic identifier
+     * @param  username          the username that logins.
      * @return                   the existing Epic identifier.
      */
-    public void deleteEpicByIdentifier(String epicIdentifier) {
+    public void deleteEpicByIdentifier(String epicIdentifier, String username) {
 
-        Epic epic = epicRepository.findByEpicIdentifier(epicIdentifier.toUpperCase());
-
-        if(epic == null) {
-            throw new EpicIdException("Epic ID " + epicIdentifier.toUpperCase() + " does not exist");
-        }
-
-        epicRepository.delete(epic);
+        epicRepository.delete(findEpicByIdentifier(epicIdentifier, username));
     }
 }
