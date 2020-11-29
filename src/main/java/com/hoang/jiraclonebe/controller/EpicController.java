@@ -59,12 +59,13 @@ public class EpicController {
     /**
      * HTTP Request to find all Epic.
      *
-     * @return         all the existing Epic objects.
+     * @param  principal    username that logs in.
+     * @return              all the existing Epic objects.
      */
     @GetMapping("/all")
-    public ResponseEntity<?> getAllEpic() {
+    public ResponseEntity<?> getAllEpic(Principal principal) {
 
-        Iterable<Epic> epic = epicService.findAll();
+        Iterable<Epic> epic = epicService.findAll(principal.getName());
 
         return new ResponseEntity<Iterable<Epic>>(epic, HttpStatus.OK);
     }

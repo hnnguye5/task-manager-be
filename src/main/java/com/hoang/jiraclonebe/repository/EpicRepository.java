@@ -18,4 +18,6 @@ public interface EpicRepository extends CrudRepository<Epic, Long> {
     Epic findByEpicIdentifier(String epicIdentifier);
 
     Iterable<Epic> findAll();
+
+    Iterable<Epic> findAllByEpicCreator(String username);
 }

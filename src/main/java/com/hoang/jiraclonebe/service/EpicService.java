@@ -69,11 +69,12 @@ public class EpicService {
     /**
      * Finds all Epic objects that exist.
      *
-     * @return         list of all Epics.
+     * @param  username     the username that logins.
+     * @return              list of all Epics.
      */
-    public Iterable<Epic> findAll() {
+    public Iterable<Epic> findAll(String username) {
 
-        return epicRepository.findAll();
+        return epicRepository.findAllByEpicCreator(username);
 
     }
 
