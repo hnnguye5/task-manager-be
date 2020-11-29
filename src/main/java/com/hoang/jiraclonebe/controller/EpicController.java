@@ -36,9 +36,10 @@ public class EpicController {
     /**
      * HTTP Request to create or update an Epic.
      *
-     * @param  epic      the Epic object.
-     * @param  result    the Epic errors creating the object.
-     * @return           the Epic object mapping being saved or updated.
+     * @param  epic         the Epic object.
+     * @param  result       the Epic errors creating the object.
+     * @param  principal    the username that logs in.
+     * @return              the Epic object mapping being saved or updated.
      */
     @PostMapping("")
     public ResponseEntity<?> createOrUpdateEpic(@RequestBody @Valid Epic epic, BindingResult result, Principal principal) {
@@ -49,6 +50,7 @@ public class EpicController {
             return errorMap;
         }
 
+        // principal sets relationship to user and epic
         Epic epic1 = epicService.saveOrUpdate(epic, principal.getName());
 
         return new ResponseEntity<>(epic1, HttpStatus.CREATED);
@@ -57,12 +59,13 @@ public class EpicController {
     /**
      * HTTP Request to find all Epic.
      *
-     * @return         all the existing Epic objects.
+     * @param  principal    username that logs in.
+     * @return              all the existing Epic objects.
      */
     @GetMapping("/all")
-    public ResponseEntity<?> getAllEpic() {
+    public ResponseEntity<?> getAllEpic(Principal principal) {
 
-        Iterable<Epic> epic = epicService.findAll();
+        Iterable<Epic> epic = epicService.findAll(principal.getName());
 
         return new ResponseEntity<Iterable<Epic>>(epic, HttpStatus.OK);
     }

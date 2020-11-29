@@ -31,17 +31,20 @@ public class EpicService {
     /**
      * Creates or Update an Epic and returns as an object.
      *
-     * @param  epic    the Epic object.
-     * @return         the Epic object being saved or updated.
+     * @param  epic         the Epic object.
+     * @param  username     username that logs in.
+     * @return              the Epic object being saved or updated.
      */
     public Epic saveOrUpdate(Epic epic, String username) {
 
         // checks to see if Epic already exists
         try{
 
+            // sets the user and epic relationship
             User user = userRepository.findByUsername(username);
             epic.setUser(user);
             epic.setEpicCreator(user.getUsername());
+
             epic.setEpicIdentifier(epic.getEpicIdentifier().toUpperCase());
 
            // create new backlog if its a new Epic being created
@@ -66,11 +69,12 @@ public class EpicService {
     /**
      * Finds all Epic objects that exist.
      *
-     * @return         list of all Epics.
+     * @param  username     the username that logins.
+     * @return              list of all Epics.
      */
-    public Iterable<Epic> findAll() {
+    public Iterable<Epic> findAll(String username) {
 
-        return epicRepository.findAll();
+        return epicRepository.findAllByEpicCreator(username);
 
     }
 
