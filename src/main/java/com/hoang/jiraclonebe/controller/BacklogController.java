@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/backlog")
@@ -36,12 +37,13 @@ public class BacklogController {
      *
      * @param  epicTask    the EpicTask object.
      * @param  result      the EpicTask errors creating the object.
-     * @param  backlog_id  the Backlog Identifier .
+     * @param  backlog_id  the Backlog Identifier.
+     * @param  principal   username that logs in.
      * @return             the EpicTask object mapping being saved.
      */
     @PostMapping("/{backlog_id}")
     public ResponseEntity<?> addEpicTaskToBacklog(@Valid @RequestBody EpicTask epicTask, BindingResult result,
-                                                  @PathVariable String backlog_id) {
+                                                  @PathVariable String backlog_id, Principal principal) {
 
         ResponseEntity<?> errorMap = mapErrorValidation.errorMapValidation(result);
         // if there are errors creating an EpicTask
@@ -49,7 +51,7 @@ public class BacklogController {
             return errorMap;
         }
 
-        EpicTask epicTask1 = epicTaskService.addEpicTask(backlog_id, epicTask);
+        EpicTask epicTask1 = epicTaskService.addEpicTask(backlog_id, epicTask, principal.getName());
 
         return new ResponseEntity<EpicTask>(epicTask1, HttpStatus.CREATED);
     }
@@ -58,12 +60,13 @@ public class BacklogController {
      * HTTP Request to find all EpicTask.
      *
      * @param   backlog_id    the Backlog Identifier.
+     * @param   principal     username that logs in.
      * @return                all the existing EpicTask objects.
      */
     @GetMapping("{backlog_id}")
-    public Iterable<EpicTask> getEpicBacklog(@PathVariable String backlog_id) {
+    public Iterable<EpicTask> getEpicBacklog(@PathVariable String backlog_id, Principal principal) {
 
-       return epicTaskService.findBacklogByIdentifier(backlog_id.toUpperCase());
+       return epicTaskService.findBacklogByIdentifier(backlog_id.toUpperCase(), principal.getName());
     }
 
     /**

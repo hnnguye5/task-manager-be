@@ -37,6 +37,21 @@ public class EpicService {
      */
     public Epic saveOrUpdate(Epic epic, String username) {
 
+        // updating Epic with authorization
+        if(epic.getId() != null){
+            Epic existingEpic = epicRepository.findByEpicIdentifier(epic.getEpicIdentifier());
+
+            boolean epicCreatorEqualToCurrentLoginUser = existingEpic.getEpicCreator().equals(username);
+
+            // if epic exist but epic does not match with the same user that created the epic, throw error
+            if(existingEpic != null && (!epicCreatorEqualToCurrentLoginUser)) {
+                throw new EpicNotFoundException("Epic does not exist in your account");
+            }
+            else if(existingEpic == null) {
+                throw new EpicNotFoundException("Epic ID: " +epic.getEpicIdentifier() + " not updated because it does not exist");
+            }
+        }
+
         // checks to see if Epic already exists
         try{
 

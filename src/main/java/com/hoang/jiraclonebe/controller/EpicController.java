@@ -89,6 +89,7 @@ public class EpicController {
      * HTTP Request to delete a specific Epic object by it's Identifier.
      *
      * @param  epicIdentifier    the Epic Identifier.
+     * @param  principal         username that logs in.
      * @return                   the specific Epic Identifier.
      */
     @DeleteMapping("/{epicIdentifier}")
