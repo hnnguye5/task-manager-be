@@ -74,12 +74,13 @@ public class BacklogController {
      *
      * @param  backlog_id     the Backlog Identifier.
      * @param  epicTask_id    the EpicTask Identifier.
+     * @param  principal      username that logs in.
      * @return                the specific EpicTask Identifier.
      */
     @GetMapping("/{backlog_id}/{epicTask_id}")
-    public ResponseEntity<?> getEpicTask(@PathVariable String backlog_id, @PathVariable String epicTask_id) {
+    public ResponseEntity<?> getEpicTask(@PathVariable String backlog_id, @PathVariable String epicTask_id, Principal principal) {
 
-        EpicTask epicTask = epicTaskService.findEpicTaskBySequence(backlog_id,epicTask_id);
+        EpicTask epicTask = epicTaskService.findEpicTaskBySequence(backlog_id,epicTask_id, principal.getName());
 
         return new ResponseEntity<EpicTask>(epicTask, HttpStatus.OK);
     }
@@ -91,11 +92,12 @@ public class BacklogController {
      * @param  result         the EpicTask errors when updating the object.
      * @param  backlog_id     the Backlog Identifier.
      * @param  epicTask_id    the EpicTask Identifier.
+     * @param  principal      username that logs in.
      * @return                the EpicTask object that is updated.
      */
     @PutMapping("/{backlog_id}/{epicTask_id}")
     public ResponseEntity<?> updatedEpicTask(@Valid @RequestBody EpicTask epicTask, BindingResult result, @PathVariable
-            String backlog_id, @PathVariable String epicTask_id) {
+            String backlog_id, @PathVariable String epicTask_id, Principal principal) {
 
         ResponseEntity<?> errorMap = mapErrorValidation.errorMapValidation(result);
         // if there are errors updating an EpicTask
@@ -103,7 +105,7 @@ public class BacklogController {
             return errorMap;
         }
 
-        EpicTask updateEpicTask = epicTaskService.updateEpicTask(epicTask,backlog_id.toUpperCase(),epicTask_id.toUpperCase());
+        EpicTask updateEpicTask = epicTaskService.updateEpicTask(epicTask,backlog_id.toUpperCase(),epicTask_id.toUpperCase(), principal.getName());
 
         return new ResponseEntity<EpicTask>(updateEpicTask, HttpStatus.OK);
     }
@@ -113,12 +115,13 @@ public class BacklogController {
      *
      * @param  backlog_id     the Backlog Identifier.
      * @param  epicTask_id    the Epic Identifier.
+     * @param  principal      username that logs in.
      * @return                the message verifying the deletion of the EpicTask object.
      */
     @DeleteMapping("/{backlog_id}/{epicTask_id}")
-    public ResponseEntity<?> deleteEpicTask(@PathVariable String backlog_id, @PathVariable String epicTask_id) {
+    public ResponseEntity<?> deleteEpicTask(@PathVariable String backlog_id, @PathVariable String epicTask_id, Principal principal) {
 
-        epicTaskService.deleteEpicTask(backlog_id,epicTask_id);
+        epicTaskService.deleteEpicTask(backlog_id,epicTask_id, principal.getName());
 
         return new ResponseEntity<String>("EpicTask " + epicTask_id.toUpperCase() + " was deleted", HttpStatus.OK);
     }

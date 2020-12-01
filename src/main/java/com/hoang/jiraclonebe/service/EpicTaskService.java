@@ -77,12 +77,6 @@ public class EpicTaskService {
     public Iterable<EpicTask> findBacklogByIdentifier(String epicIdentifier, String username) {
 
         epicService.findEpicByIdentifier(epicIdentifier, username);
-//        Epic epic = epicRepository.findByEpicIdentifier(epicIdentifier.toUpperCase());
-//
-//        // if epic is null, there cannot be an EpicTask that exist
-//        if(epic == null) {
-//            throw new EpicNotFoundException("Epic ID: " + epicIdentifier.toUpperCase() + " is not found");
-//        }
 
         return epicTaskRepository.findByEpicIdentifierOrderByPriority(epicIdentifier);
     }
@@ -92,17 +86,19 @@ public class EpicTaskService {
      *
      * @param  backlog_id     the Backlog Identifier.
      * @param  epicTask_id    the EpicTask Identifier.
+     * @param  username       name of the username that logs in.
      * @return                the EpicTask object.
      */
-    public EpicTask findEpicTaskBySequence(String backlog_id, String epicTask_id) {
+    public EpicTask findEpicTaskBySequence(String backlog_id, String epicTask_id, String username) {
 
-        EpicTask epicTask = epicTaskRepository.findByEpicSequence(epicTask_id.toUpperCase());
+        // finds if backlog exist
+        epicService.findEpicByIdentifier(backlog_id, username);
 
-        // if there is no EpicTask that exist
+        EpicTask epicTask = epicTaskRepository.findByEpicSequence(epicTask_id);
+
         if(epicTask == null) {
-            throw new EpicNotFoundException("Epic Task: " + epicTask_id.toUpperCase() + " is not found");
+            throw new EpicNotFoundException("EpicTask " +epicTask_id + " does not exist.");
         }
-
         // EpicTask must be related to the same Backlog that it exist within
         if(!epicTask.getEpicIdentifier().equals(backlog_id.toUpperCase())){
             throw new EpicNotFoundException("EpicTask ID: " + epicTask_id.toUpperCase() + " does not exist in " + backlog_id);
@@ -117,11 +113,12 @@ public class EpicTaskService {
      * @param  updateEpicTask    the EpicTask that is being updated.
      * @param  backlog_id        the Backlog Identifier.
      * @param  epicTask_id       the EpicTask Identifier.
+     * @param  username          name of the username that logs in.
      * @return                   the EpicTask object that is updated.
      */
-    public EpicTask updateEpicTask(EpicTask updateEpicTask, String backlog_id, String epicTask_id) {
+    public EpicTask updateEpicTask(EpicTask updateEpicTask, String backlog_id, String epicTask_id, String username) {
 
-        EpicTask epicTask = findEpicTaskBySequence(backlog_id.toUpperCase(), epicTask_id.toUpperCase());
+        EpicTask epicTask = findEpicTaskBySequence(backlog_id.toUpperCase(), epicTask_id.toUpperCase(), username);
 
         epicTask = updateEpicTask;
 
@@ -134,11 +131,12 @@ public class EpicTaskService {
      *
      * @param  backlog_id        the Backlog Identifier.
      * @param  epicTask_id       the EpicTask Identifier.
+     * @param  username          name of the username that logs in.
      * @return                   the EpicTask object that is updated.
      */
-    public void deleteEpicTask(String backlog_id, String epicTask_id) {
+    public void deleteEpicTask(String backlog_id, String epicTask_id, String username) {
 
-        EpicTask epicTask =  findEpicTaskBySequence(backlog_id,epicTask_id);
+        EpicTask epicTask =  findEpicTaskBySequence(backlog_id,epicTask_id, username);
 
        epicTaskRepository.delete(epicTask);
     }
