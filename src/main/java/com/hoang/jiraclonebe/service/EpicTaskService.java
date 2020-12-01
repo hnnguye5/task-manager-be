@@ -36,6 +36,7 @@ public class EpicTaskService {
      *
      * @param  epicIdentifier    the Epic Identifier.
      * @param  epicTask          the EpicTask object.
+     * @param  username          name of the username that logs in.
      * @return                   the Epic object being saved or updated.
      */
     public EpicTask addEpicTask(String epicIdentifier, EpicTask epicTask, String username) {
@@ -70,16 +71,18 @@ public class EpicTaskService {
      * Finds all EpicTask objects that exist.
      *
      * @param  epicIdentifier    the Epic Identifier.
+     * @param  username          name of the username that logs in.
      * @return                   list of all EpicTask.
      */
-    public Iterable<EpicTask> findBacklogByIdentifier(String epicIdentifier) {
+    public Iterable<EpicTask> findBacklogByIdentifier(String epicIdentifier, String username) {
 
-        Epic epic = epicRepository.findByEpicIdentifier(epicIdentifier.toUpperCase());
-
-        // if epic is null, there cannot be an EpicTask that exist
-        if(epic == null) {
-            throw new EpicNotFoundException("Epic ID: " + epicIdentifier.toUpperCase() + " is not found");
-        }
+        epicService.findEpicByIdentifier(epicIdentifier, username);
+//        Epic epic = epicRepository.findByEpicIdentifier(epicIdentifier.toUpperCase());
+//
+//        // if epic is null, there cannot be an EpicTask that exist
+//        if(epic == null) {
+//            throw new EpicNotFoundException("Epic ID: " + epicIdentifier.toUpperCase() + " is not found");
+//        }
 
         return epicTaskRepository.findByEpicIdentifierOrderByPriority(epicIdentifier);
     }

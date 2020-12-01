@@ -37,7 +37,8 @@ public class BacklogController {
      *
      * @param  epicTask    the EpicTask object.
      * @param  result      the EpicTask errors creating the object.
-     * @param  backlog_id  the Backlog Identifier .
+     * @param  backlog_id  the Backlog Identifier.
+     * @param  principal   username that logs in.
      * @return             the EpicTask object mapping being saved.
      */
     @PostMapping("/{backlog_id}")
@@ -59,12 +60,13 @@ public class BacklogController {
      * HTTP Request to find all EpicTask.
      *
      * @param   backlog_id    the Backlog Identifier.
+     * @param   principal     username that logs in.
      * @return                all the existing EpicTask objects.
      */
     @GetMapping("{backlog_id}")
-    public Iterable<EpicTask> getEpicBacklog(@PathVariable String backlog_id) {
+    public Iterable<EpicTask> getEpicBacklog(@PathVariable String backlog_id, Principal principal) {
 
-       return epicTaskService.findBacklogByIdentifier(backlog_id.toUpperCase());
+       return epicTaskService.findBacklogByIdentifier(backlog_id.toUpperCase(), principal.getName());
     }
 
     /**
