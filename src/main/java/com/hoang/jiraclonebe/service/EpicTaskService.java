@@ -28,6 +28,9 @@ public class EpicTaskService {
     @Autowired
     private EpicRepository epicRepository;
 
+    @Autowired
+    private EpicService epicService;
+
     /**
      * Creates or Update an EpicTask and returns as an object.
      *
@@ -35,11 +38,12 @@ public class EpicTaskService {
      * @param  epicTask          the EpicTask object.
      * @return                   the Epic object being saved or updated.
      */
-    public EpicTask addEpicTask(String epicIdentifier, EpicTask epicTask) {
+    public EpicTask addEpicTask(String epicIdentifier, EpicTask epicTask, String username) {
 
-        try{
+
             // establish relations with Backlog and Epic Task
-            Backlog backlog = backlogRepository.findByEpicIdentifier((epicIdentifier.toUpperCase()));
+            // uses Epic Service to establish if user owns the EpicTask instead of Backlog Repo
+            Backlog backlog = epicService.findEpicByIdentifier(epicIdentifier, username).getBacklog();
             epicTask.setBacklog(backlog);
 
             // allows EpicTask to have its own IDs for each task using Backlog EpicSequence
@@ -50,7 +54,7 @@ public class EpicTaskService {
             epicTask.setEpicIdentifier(epicIdentifier);
 
 
-            if(epicTask.getPriority() == null) {
+            if(epicTask.getPriority() == null || epicTask.getPriority() == 0) {
                 epicTask.setPriority(3);
             }
 
@@ -59,10 +63,6 @@ public class EpicTaskService {
             }
 
             return epicTaskRepository.save(epicTask);
-        }
-        catch(Exception e) {
-            throw new EpicNotFoundException("Epic ID: " + epicIdentifier.toUpperCase() + " is not found");
-        }
 
     }
 

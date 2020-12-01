@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/backlog")
@@ -41,7 +42,7 @@ public class BacklogController {
      */
     @PostMapping("/{backlog_id}")
     public ResponseEntity<?> addEpicTaskToBacklog(@Valid @RequestBody EpicTask epicTask, BindingResult result,
-                                                  @PathVariable String backlog_id) {
+                                                  @PathVariable String backlog_id, Principal principal) {
 
         ResponseEntity<?> errorMap = mapErrorValidation.errorMapValidation(result);
         // if there are errors creating an EpicTask
@@ -49,7 +50,7 @@ public class BacklogController {
             return errorMap;
         }
 
-        EpicTask epicTask1 = epicTaskService.addEpicTask(backlog_id, epicTask);
+        EpicTask epicTask1 = epicTaskService.addEpicTask(backlog_id, epicTask, principal.getName());
 
         return new ResponseEntity<EpicTask>(epicTask1, HttpStatus.CREATED);
     }
