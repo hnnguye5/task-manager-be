@@ -34,16 +34,16 @@ public class Epic {
     @NotBlank(message = "Must enter a description")
     private String epicDescription;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-mm-dd")
     private Date startDate;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-mm-dd")
     private Date endDate;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-mm-dd")
     private Date createdOn;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-mm-dd")
     private Date updatedOn;
 
     @PrePersist

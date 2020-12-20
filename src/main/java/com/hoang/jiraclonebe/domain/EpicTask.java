@@ -27,21 +27,27 @@ public class EpicTask {
 
     @Column(updatable = false, unique = true)
     private String epicSequence;
+
     @NotBlank(message = "Please write a summary for task")
     private String summary;
+
     @NotBlank(message = "Please enter a acceptance criteria for task")
     private String acceptanceCriteria;
     private String status;
     private Integer priority;
-    @JsonFormat(pattern = "yyyy-MM-dd")
+
+    @JsonFormat(pattern="yyyy-mm-dd")
     private Date dueDate;
 
-    private Date createOn;
+    @JsonFormat(pattern="yyyy-mm-dd")
+    private Date createdOn;
+
+    @JsonFormat(pattern="yyyy-mm-dd")
     private Date updatedOn;
 
     @PrePersist
-    protected void createOn() {
-        this.createOn = new Date();
+    protected void createdOn() {
+        this.createdOn = new Date();
     }
 
     @PreUpdate
@@ -121,12 +127,12 @@ public class EpicTask {
         this.dueDate = dueDate;
     }
 
-    public Date getCreateOn() {
-        return createOn;
+    public Date getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreateOn(Date createOn) {
-        this.createOn = createOn;
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
     }
 
     public Date getUpdatedOn() {

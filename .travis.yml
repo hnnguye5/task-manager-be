@@ -1,0 +1,8 @@
+language: java
+jdk:
+  - oraclejdk11
+
+script: ./mvnw clean install -DskipTests
+
+notifications:
+  email: hnpn334@gmail.com
