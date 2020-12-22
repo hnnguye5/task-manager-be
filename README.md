@@ -7,13 +7,13 @@ Table of contents
 =================
 
 <!--ts-->
-   * [Task Manager](#TaskManager)
+   * [Task Manager](#Task-Manager)
    * [Technologies](#Technologies)
-   * [Getting Started](#GettingStarted)
-      * [Run Application](#RunApplication)
+   * [Getting Started](#Getting-Started)
+      * [Run Application](#Run-Application)
    * [Usage](#Usage)
       * [Epic](#Epic)
-      * [Backlog/Epic Task](#Backlog/Epic ask)
+      * [Backlog/Epic Task](#Backlog/Epic-Task)
    * [Contributing](#Contributing)
    * [License](#License)
 <!--te-->
