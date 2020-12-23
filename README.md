@@ -39,7 +39,7 @@ Simple task manager created with Spring Boot and MySQL.
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/hnnguye5/jira-clone-fe.git
+   git clone https://github.com/hnnguye5/task-manager-be.git
    ```
 2. To compile and run your application
    ```sh
@@ -61,7 +61,7 @@ Epic is a large body of work that can be broken down into a number of smaller ta
 
 `POST/api/epic`
 
-Creates a new Epic.
+Create a new Epic.
 
 **JSON body:**
 ```json
@@ -79,31 +79,31 @@ Creates a new Epic.
 
 `id:` epic id that is automatically generated.
 
-`epicIdentifier:` a unique identifier for the epic.
+`epicIdentifier:` a unique identifier for the Epic.
 
-`epicName:` name of the epic.
+`epicName:` name of the Epic.
 
-`startDate:` date for which the epic start.
+`startDate:` date for which the Epic start.
 
-`endDate:` date for which the epic end.
+`endDate:` date for which the Epic end.
 
-`createdOn:` date for which the epic is created.
+`createdOn:` date for which the Epic is created.
 
-`updatedOn:` date for which the epic is updated.
+`updatedOn:` date for which the Epic is updated.
 
-`epicCreator:` user who created the epic
+`epicCreator:` user who created the Epic
 
 **POST**
 
 `POST/api/epic`
 
-Updates an Epic using the Epic's id(generated).
+Update an Epic using the Epic's id.
 
 **GET**
 
 `GET/api/epic/all`
 
-Retrieves all Epic created by the epicCreator.
+Retrieve all Epic created by the epicCreator.
 
 `GET/api/epic/{epicIdentifier}`
 
@@ -113,17 +113,19 @@ Retrieve an Epic by the epicIdentifier.
 
 `DELETE/api/epic/{epicIdentifier}`
 
-Deletes an Epic by the epicIdentnfier.
+Delete an Epic by the epicIdentnfier.
 
 ### Backlog and Epic Task
 
-A Backlog holds all existing Epic Tasks of an Epic.
+A Backlog holds all existing Epic tasks of an Epic.
+
+A Epic Task is made up of many smaller tasks to complete an Epic.
 
 **POST**
 
 `POST/api/backlog/{epicIdentifier}`
 
-Can create an or many Epic task(s) in the backlog. A backlog is created when a new Epic is created. It has a relation to the Epic by using the same epicIdentifer.
+Can create many Epic Tasks in the backlog. A Backlog is created when a new Epic is created. It has a relation to the Epic by having the same epicIdentifer.
 
 **JSON body:**
 ```json
@@ -144,43 +146,43 @@ Can create an or many Epic task(s) in the backlog. A backlog is created when a n
 
 `epicIdentifier:` a unique identifier for the Epic.
 
-`epicSequence:` name of the Epic task that is created.
+`epicSequence:` name of the Epic Task that is created.
 
-`summary:` a brief description of the Epic task.
+`summary:` a brief description of the Epic Task.
 
-`acceptanceCriteria:` a brief description for the Epic task to be fulfilled.
+`acceptanceCriteria:` a brief description for the Epic Task to be fulfilled.
 
-`status:` status in which the Epic task is in. (ex. To Do, In Progress, Done)
+`status:` status in which the Epic Task is in. (ex. To Do, In Progress, Done)
 
-`priority:` ranking for the Epic task. (ex. Low, Medium, High)
+`priority:` ranking for the Epic Task. (ex. Low, Medium, High)
 
-`dueDate:` date in which the Epic task must be fulfilled.
+`dueDate:` date in which the Epic Task must be fulfilled.
 
-`createdOn:` date for which the epic is created.
+`createdOn:` date for which the Epic Task is created.
 
-`updatedOn:` date for which the epic is updated.
+`updatedOn:` date for which the Epic Task is updated.
 
 **GET**
 
 `GET/api/backlog/{epicIdentifier}`
 
-Retrieve all the Epic tasks in the backlog by the backlog's epicIdentifier.
+Retrieve all the Epic Tasks in the Backlog by the Backlog's epicIdentifier.
 
 `GET/api/backlog/{epicIdentifier}/{epicSequence}`
 
-Retrieve an Epic task by the epicSequence.
+Retrieve an Epic Task by the epicSequence.
 
 **PUT**
 
 `PUT/api/backlog/{epicIdentifier}/{epicSequence}`
 
-Updates an Epic task by using the epicIdentifier and epicSequence.
+Update an Epic Task by using the epicIdentifier and epicSequence.
 
 **DELETE**
 
 `PUT/api/backlog/{epicIdentifier}/{epicSequence}`
 
-Deletes an Epic task by using the epicIdentifier and epicSequence.
+Delete an Epic Task by using the epicIdentifier and epicSequence.
 
 ## Contributing
 
