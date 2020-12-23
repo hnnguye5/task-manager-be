@@ -80,7 +80,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable() //disable since we using JWT
-                .exceptionHandling().authenticationEntryPoint(unauthHandler)
+                .exceptionHandling().authenticationEntryPoint(unauthHandler) // send error response if user is unauthorized
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //server does not hold sessions(no state, uses JTW)
                 .and()

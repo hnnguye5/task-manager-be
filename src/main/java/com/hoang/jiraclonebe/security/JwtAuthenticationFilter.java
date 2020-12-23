@@ -20,6 +20,13 @@ import java.util.Collections;
 import static com.hoang.jiraclonebe.security.SecurityConstants.HEADER_STRING;
 import static com.hoang.jiraclonebe.security.SecurityConstants.TOKEN_PREFIX;
 
+/**
+ * The class handles the JWT Authentication when logging in with user.
+ * JWT.
+ *
+ * @author Hoang Nguyen
+ * @version 1.0, 7 Nov 2020
+ */
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -33,6 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         try{
+            // user authentication with valid JWT
             String jwt = getJwtFromRequest(request);
             if(StringUtils.hasText(jwt) && jwtTokenProvider.validateToken(jwt)) {
                 Long userId = jwtTokenProvider.getUserIdFromJWT(jwt);
@@ -54,6 +62,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     }
 
+    // grabs the JWT authentication code
     private String getJwtFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader(HEADER_STRING);
 
