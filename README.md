@@ -13,14 +13,14 @@ Table of contents
       * [Run Application](#Run-Application)
    * [Usage](#Usage)
       * [Epic](#Epic)
-      * [Backlog/Epic Task](#Backlog/Epic-Task)
+      * [Backlog and Epic Task](#Backlog-and-Epic-Task)
    * [Contributing](#Contributing)
    * [License](#License)
 <!--te-->
 
 # Task Manager 
 
-Simple task manager created with Spring Boot and MySQL
+Simple task manager created with Spring Boot and MySQL.
 
 ## Technologies
 
@@ -115,7 +115,7 @@ Retrieve an Epic by the epicIdentifier.
 
 Deletes an Epic by the epicIdentnfier.
 
-### Backlog/Epic Task
+### Backlog and Epic Task
 
 A Backlog holds all existing Epic Tasks of an Epic.
 
